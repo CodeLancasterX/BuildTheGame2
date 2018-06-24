@@ -17,7 +17,8 @@ import observer.GameObserver;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements GameObserver, MouseListener, MouseMotionListener {
 	
-	private static final int PUZZLE_BLOCK_COUNT = 3, MAX_TILE_COUNT = 5;
+	private static final int PUZZLE_BLOCK_COUNT = 3;
+	private static final int MAX_TILE_COUNT = 5;
 	private static final int ROW_COUNT = 10, COLUMN_COUNT = 10;
 	private static final int TILE_SIZE = 32, TILE_GAP = 2, TILE_MINI_SIZE = 20;
 	private static final Color COLOR_DEFAULT = new Color(220, 220, 220);
@@ -71,8 +72,9 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 			for (int y = 0; y < ROW_COUNT; y++) {
 				int x1 = x * TILE_SIZE + x * TILE_GAP;
 				int y1 = y * TILE_SIZE + y * TILE_GAP;
-				
-				drawTile(blocks[x][y] == '.' ? COLOR_DEFAULT : getColorByChar(blocks[x][y]), x1, y1, true, g);
+
+				if (blocks[x][y] == '.') drawTile(COLOR_DEFAULT, x1, y1, true, g);
+				else drawTile(getColorByChar(blocks[x][y]), x1, y1, true, g);
 			}
 			
 		}
@@ -82,7 +84,7 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 			if (puzzleBlocks[i] != null) {
 				drawPuzzleBlock(puzzleBlocks[i], x, 400, g);
 			}			
-			
+			//TODO find out what this is.
 			x += 113;
 		}
 		
@@ -104,8 +106,10 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 	
 	private void drawTile(Color color, int x, int y, boolean grid, Graphics g) {		
 		g.setColor(color);
-		if (grid) g.fillRect(x, y, TILE_SIZE, grid ? TILE_SIZE : TILE_MINI_SIZE);
-		else g.fillRect(x, y, TILE_MINI_SIZE, grid ? TILE_SIZE : TILE_MINI_SIZE);
+		if (grid) if (grid) g.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+		else g.fillRect(x, y, TILE_SIZE, TILE_MINI_SIZE);
+		else if (grid) g.fillRect(x, y, TILE_MINI_SIZE, TILE_SIZE);
+		else g.fillRect(x, y, TILE_MINI_SIZE, TILE_MINI_SIZE);
 	}
 	
 	private void drawPuzzleBlock(PuzzleBlock puzzleBlock, int x, int y, Graphics g) {
@@ -194,19 +198,19 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 	
 	@Override
 	public void mouseClicked(MouseEvent me) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent me) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent me) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
@@ -270,7 +274,7 @@ public class GamePanel extends JPanel implements GameObserver, MouseListener, Mo
 
 	@Override
 	public void mouseMoved(MouseEvent me) {
-		// TODO Auto-generated method stub
+
 		
 	}
 

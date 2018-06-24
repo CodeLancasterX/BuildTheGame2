@@ -33,8 +33,9 @@ public class GameOverPanel extends JPanel {
 		setPreferredSize(PANEL_SIZE);
 		
 		this.game = game;
-		
-		reasonLabel = new Label(surrendered ? PHRASE_YOU_SURRENDERED : PHRASE_NO_MOVES_LEFT);
+
+		if (surrendered) reasonLabel = new Label(PHRASE_YOU_SURRENDERED);
+		else reasonLabel = new Label(PHRASE_NO_MOVES_LEFT);
 		highscoreLabel = new Label(Integer.toString(game.getHighScore()));
 		
 		infoPanel = new JPanel();
@@ -73,7 +74,8 @@ public class GameOverPanel extends JPanel {
 	}
 	
 	public void setSurrendered(boolean surrendered) {
-		reasonLabel.setText(surrendered ? PHRASE_YOU_SURRENDERED : PHRASE_NO_MOVES_LEFT);
+		if (surrendered) reasonLabel.setText(PHRASE_YOU_SURRENDERED);
+		else reasonLabel.setText(PHRASE_NO_MOVES_LEFT);
 		cancelButton.setEnabled(surrendered);
 		
 		revalidate();
